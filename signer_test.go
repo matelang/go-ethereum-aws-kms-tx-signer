@@ -6,13 +6,13 @@ import (
 	"math/big"
 	"testing"
 
+	ethawskmssigner "github.com/0xSyndr/go-ethereum-aws-kms-tx-signer"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/kms"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	ethawskmssigner "github.com/welthee/go-ethereum-aws-kms-tx-signer/v2"
 )
 
 const keyId = "331c7988-c19b-4e30-8037-530389c92ac0"
