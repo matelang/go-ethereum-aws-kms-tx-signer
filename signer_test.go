@@ -18,7 +18,7 @@ import (
 const keyId = "331c7988-c19b-4e30-8037-530389c92ac0"
 const anotherEthAddr = "0xeB7eb6c156ac20a9c45beFDC95F1A13625B470b7"
 
-const ethAddr = "https://ropsten.infura.io/v3/a76d1cb719694e48af1a539ec96f040b"
+const ethAddr = "wss://arb-sepolia.g.alchemy.com/v2/G_tXRCm6bn_Ii9WVfVmLyLk4BQ2eh73I"
 
 func TestSigning(t *testing.T) {
 	ctx := context.Background()
