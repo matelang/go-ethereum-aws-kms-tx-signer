@@ -2,7 +2,12 @@
 
 # AWS KMS transaction signer for go-ethereum
 
-At [welthee](https://welthee.com) we are using AWS KMS managed private keys to sign Ethereum transactions.
+```
+⚠️This repo was recently moved to `matelang/go-ethereum-aws-kms-tx-signer` 
+from `welthee/go-ethereum-aws-kms-tx-signer`.
+
+Update your import paths accordingly.
+```
 
 This little package eases integration with AWS KMS in your GoLang Ethereum project, by extending the functionality
 offered by the official go-ethereum library.
@@ -10,7 +15,7 @@ offered by the official go-ethereum library.
 ## Import
 
 ```go
-import "github.com/welthee/go-ethereum-aws-kms-tx-signer/v2"
+import "github.com/matelang/go-ethereum-aws-kms-tx-signer/v2"
 ```
 
 ## Usage
@@ -75,3 +80,8 @@ err = client.SendTransaction(context.TODO(), signedTx)
 * [Signing and Verifying Ethereum Signatures](https://yos.io/2018/11/16/ethereum-signatures/)
 * [EIP-155: Simple replay attack protection](https://eips.ethereum.org/EIPS/eip-155)
 * [The Dark Side of the Elliptic Curve - Signing Ethereum Transactions with AWS KMS in JavaScript](https://luhenning.medium.com/the-dark-side-of-the-elliptic-curve-signing-ethereum-transactions-with-aws-kms-in-javascript-83610d9a6f81)
+
+# History
+This package was originally created for [welthee](https://welthee.com), and donated to the community as open source.
+Since the company could not provide a maintainer for this package, it was moved to the [matelang], where it is now maintained.
+I am the original author of this package, and I am happy to continue maintaining it.
