@@ -2,8 +2,8 @@ package ethawskmssigner_test
 
 import (
 	"context"
-	"log"
 	"math/big"
+	"os"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -15,57 +15,66 @@ import (
 	ethawskmssigner "github.com/welthee/go-ethereum-aws-kms-tx-signer/v2"
 )
 
-const keyId = "331c7988-c19b-4e30-8037-530389c92ac0"
-const anotherEthAddr = "0xeB7eb6c156ac20a9c45beFDC95F1A13625B470b7"
-
-const ethAddr = "https://ropsten.infura.io/v3/a76d1cb719694e48af1a539ec96f040b"
-
+// Set INTEGRATION_KEY_ID, INTEGRATION_ETH_RPC, and (optionally) INTEGRATION_RECIPIENT
+// to run TestSigning against a real KMS key and Ethereum endpoint. Without these,
+// the test is skipped.
+//
+// Container-based tests against nsmithuk/local-kms are added in a follow-up PR.
 func TestSigning(t *testing.T) {
-	ctx := context.Background()
-	awsCfg, err := config.LoadDefaultConfig(context.Background())
-	if err != nil {
-		log.Fatal(err)
+	keyID := os.Getenv("INTEGRATION_KEY_ID")
+	rpcURL := os.Getenv("INTEGRATION_ETH_RPC")
+	if keyID == "" || rpcURL == "" {
+		t.Skip("set INTEGRATION_KEY_ID and INTEGRATION_ETH_RPC to run the live KMS+Ethereum integration test")
+	}
+	recipient := os.Getenv("INTEGRATION_RECIPIENT")
+	if recipient == "" {
+		recipient = "0xeB7eb6c156ac20a9c45beFDC95F1A13625B470b7"
 	}
 
+	ctx := context.Background()
+	awsCfg, err := config.LoadDefaultConfig(ctx)
+	if err != nil {
+		t.Fatalf("load AWS config: %v", err)
+	}
 	kmsSvc := kms.NewFromConfig(awsCfg)
 
-	client, err := ethclient.Dial(ethAddr)
+	client, err := ethclient.Dial(rpcURL)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatalf("dial %s: %v", rpcURL, err)
 	}
 
-	clChainId, _ := client.ChainID(ctx)
-
-	transactOpts, err := ethawskmssigner.NewAwsKmsTransactorWithChainIDCtx(ctx, kmsSvc, keyId, clChainId)
+	chainID, err := client.ChainID(ctx)
 	if err != nil {
-		log.Fatalf("can not sign: %s", err)
+		t.Fatalf("chain id: %v", err)
 	}
 
-	nonce, err := client.PendingNonceAt(context.Background(), transactOpts.From)
+	transactOpts, err := ethawskmssigner.NewAwsKmsTransactorWithChainIDCtx(ctx, kmsSvc, keyID, chainID)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatalf("new transactor: %v", err)
 	}
 
-	toAddress := common.HexToAddress(anotherEthAddr)
-
-	suggestedGasPrice, _ := client.SuggestGasPrice(ctx)
-	suggestedGasLimit, err := client.EstimateGas(ctx, ethereum.CallMsg{To: &toAddress, Data: nil})
+	nonce, err := client.PendingNonceAt(ctx, transactOpts.From)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatalf("pending nonce: %v", err)
 	}
-	value := big.NewInt(10)
-	gasLimit := suggestedGasLimit
-	gasPrice := suggestedGasPrice
 
-	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, nil)
+	toAddress := common.HexToAddress(recipient)
+	gasPrice, err := client.SuggestGasPrice(ctx)
+	if err != nil {
+		t.Fatalf("suggest gas price: %v", err)
+	}
+	gasLimit, err := client.EstimateGas(ctx, ethereum.CallMsg{To: &toAddress})
+	if err != nil {
+		t.Fatalf("estimate gas: %v", err)
+	}
 
+	tx := types.NewTransaction(nonce, toAddress, big.NewInt(10), gasLimit, gasPrice, nil)
 	signedTx, err := transactOpts.Signer(transactOpts.From, tx)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatalf("sign tx: %v", err)
 	}
 
-	err = client.SendTransaction(ctx, signedTx)
-	if err != nil {
-		log.Fatalf("can not send tx %s", err)
+	if err := client.SendTransaction(ctx, signedTx); err != nil {
+		t.Fatalf("send tx: %v", err)
 	}
 }
