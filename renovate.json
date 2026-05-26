@@ -4,13 +4,10 @@
     "every 1 months on the first day of the month"
   ],
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "*"
-      ],
       "matchManagers": [
         "gomod"
       ],
@@ -19,15 +16,25 @@
         "patch",
         "digest"
       ],
-      "excludePackagePrefixes": [
-        "github.com/welthee/welthee-api/v2"
-      ],
       "postUpdateOptions": [
         "gomodTidy",
         "gomodUpdateImportPaths"
       ],
       "groupName": "all non-major golang dependencies",
-      "groupSlug": "all-minor-patch-golang"
+      "groupSlug": "all-minor-patch-golang",
+      "matchPackageNames": [
+        "*"
+      ]
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "all github action dependencies",
+      "groupSlug": "all-gha",
+      "matchPackageNames": [
+        "*"
+      ]
     }
   ]
 }

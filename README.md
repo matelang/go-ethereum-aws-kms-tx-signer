@@ -2,6 +2,13 @@
 
 # AWS KMS transaction signer for go-ethereum
 
+[![Go](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/go.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/go.yml)
+[![Lint](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/lint.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/lint.yml)
+[![Security](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/security.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/security.yml)
+[![CodeQL](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/codeql.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/matelang/go-ethereum-aws-kms-tx-signer/badge)](https://scorecard.dev/viewer/?uri=github.com/matelang/go-ethereum-aws-kms-tx-signer)
+[![License](https://img.shields.io/github/license/matelang/go-ethereum-aws-kms-tx-signer)](LICENSE)
+
 ```
 ⚠️This repo was recently moved to `matelang/go-ethereum-aws-kms-tx-signer` 
 from `welthee/go-ethereum-aws-kms-tx-signer`.

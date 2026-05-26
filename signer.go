@@ -139,7 +139,7 @@ func getSignatureFromKms(
 
 func getEthereumSignature(expectedPublicKeyBytes []byte, txHash []byte, r []byte, s []byte) ([]byte, error) {
 	rsSignature := append(adjustSignatureLength(r), adjustSignatureLength(s)...)
-	signature := append(rsSignature, []byte{0}...)
+	signature := append(rsSignature, []byte{0}...) //nolint:gocritic // crypto path; refactored in the EIP-712 PR.
 
 	recoveredPublicKeyBytes, err := crypto.Ecrecover(txHash, signature)
 	if err != nil {
@@ -147,7 +147,7 @@ func getEthereumSignature(expectedPublicKeyBytes []byte, txHash []byte, r []byte
 	}
 
 	if hex.EncodeToString(recoveredPublicKeyBytes) != hex.EncodeToString(expectedPublicKeyBytes) {
-		signature = append(rsSignature, []byte{1}...)
+		signature = append(rsSignature, []byte{1}...) //nolint:gocritic // crypto path; refactored in the EIP-712 PR.
 		recoveredPublicKeyBytes, err = crypto.Ecrecover(txHash, signature)
 		if err != nil {
 			return nil, err
@@ -185,9 +185,10 @@ func GetPubKeyCtx(ctx context.Context, svc *kms.Client, keyId string) (*ecdsa.Pu
 
 func adjustSignatureLength(buffer []byte) []byte {
 	buffer = bytes.TrimLeft(buffer, "\x00")
-	for len(buffer) < 32 {
-		zeroBuf := []byte{0}
-		buffer = append(zeroBuf, buffer...)
+	if len(buffer) >= 32 {
+		return buffer
 	}
-	return buffer
+	padded := make([]byte, 32)
+	copy(padded[32-len(buffer):], buffer)
+	return padded
 }

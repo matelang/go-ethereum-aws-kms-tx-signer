@@ -1,0 +1,66 @@
+name: Bug report
+description: Report something that doesn't work the way the README says it should.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **For security vulnerabilities, do not use this form** —
+        see [SECURITY.md](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/blob/main/SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: Module version
+      description: Output of `go list -m github.com/matelang/go-ethereum-aws-kms-tx-signer/...`
+      placeholder: e.g. v3.0.0 or v3.0.0-YYYYMMDDhhmmss-abcdef
+    validations:
+      required: true
+  - type: input
+    id: go-version
+    attributes:
+      label: Go version
+      placeholder: e.g. go1.26.1
+    validations:
+      required: true
+  - type: input
+    id: geth-version
+    attributes:
+      label: go-ethereum version
+      description: Output of `go list -m github.com/ethereum/go-ethereum`
+      placeholder: e.g. v1.15.11
+    validations:
+      required: true
+  - type: dropdown
+    id: tx-type
+    attributes:
+      label: Transaction type
+      options:
+        - Legacy
+        - EIP-2930 access-list
+        - EIP-1559 dynamic-fee
+        - EIP-4844 blob
+        - EIP-712 typed data
+        - Not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Repro
+      description: Minimal Go code or test that triggers the issue. Do not include real KMS key IDs or AWS credentials.
+      render: go
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include any error messages and stack traces (use code blocks).
+    validations:
+      required: true

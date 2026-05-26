@@ -1,0 +1,38 @@
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gosec
+    - revive
+    - misspell
+    - bodyclose
+    - gocritic
+    - prealloc
+    - unconvert
+
+  settings:
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+    gosec:
+      excludes:
+        # G104 - Errors unhandled. ASN.1 marshalling and crypto/hash writes do not error in practice.
+        - G104
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - gosec
+          - prealloc

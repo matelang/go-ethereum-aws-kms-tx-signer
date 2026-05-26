@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a new feature or change.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem are you trying to solve? Why does the existing API not suffice?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the API change. Show the proposed signatures or config knobs.
+      render: go
+    validations:
+      required: true
+  - type: textarea
+    id: compat
+    attributes:
+      label: Backward compatibility
+      description: How does this affect existing consumers? Default-off / additive?
+    validations:
+      required: true
