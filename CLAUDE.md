@@ -112,5 +112,5 @@ go mod tidy
 ## Versioning
 
 Tags follow Go's semantic import versioning. The module path includes the
-major-version suffix (`/v3`, `/v4`, …); a breaking change requires both a
+major-version suffix (`/v2`, `/v3`, …); a breaking change requires both a
 new tag and a new module-path suffix.
