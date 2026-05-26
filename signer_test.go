@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	ethawskmssigner "github.com/welthee/go-ethereum-aws-kms-tx-signer/v2"
+	ethawskmssigner "github.com/matelang/go-ethereum-aws-kms-tx-signer/v3"
 )
 
 // Set INTEGRATION_KEY_ID, INTEGRATION_ETH_RPC, and (optionally) INTEGRATION_RECIPIENT
