@@ -7,22 +7,23 @@
 [![Security](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/security.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/security.yml)
 [![CodeQL](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/codeql.yml/badge.svg)](https://github.com/matelang/go-ethereum-aws-kms-tx-signer/actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/matelang/go-ethereum-aws-kms-tx-signer/badge)](https://scorecard.dev/viewer/?uri=github.com/matelang/go-ethereum-aws-kms-tx-signer)
+[![Go Reference](https://pkg.go.dev/badge/github.com/matelang/go-ethereum-aws-kms-tx-signer/v3.svg)](https://pkg.go.dev/github.com/matelang/go-ethereum-aws-kms-tx-signer/v3)
+[![Go Report Card](https://goreportcard.com/badge/github.com/matelang/go-ethereum-aws-kms-tx-signer/v3)](https://goreportcard.com/report/github.com/matelang/go-ethereum-aws-kms-tx-signer/v3)
 [![License](https://img.shields.io/github/license/matelang/go-ethereum-aws-kms-tx-signer)](LICENSE)
 
-```
-⚠️This repo was recently moved to `matelang/go-ethereum-aws-kms-tx-signer` 
-from `welthee/go-ethereum-aws-kms-tx-signer`.
+> **v3 release**: the module path is now
+> `github.com/matelang/go-ethereum-aws-kms-tx-signer/v3`. v2 consumers
+> on `github.com/welthee/...` or `github.com/matelang/...v2` should
+> upgrade — those paths are no longer maintained.
 
-Update your import paths accordingly.
-```
-
-This little package eases integration with AWS KMS in your GoLang Ethereum project, by extending the functionality
-offered by the official go-ethereum library.
+This package eases integration with AWS KMS in your Go Ethereum project,
+by extending the functionality offered by the official `go-ethereum`
+library.
 
 ## Import
 
 ```go
-import "github.com/matelang/go-ethereum-aws-kms-tx-signer/v2"
+import "github.com/matelang/go-ethereum-aws-kms-tx-signer/v3"
 ```
 
 ## Usage
@@ -83,12 +84,29 @@ signedTx, _ := transactOpts.Signer(transactOpts.From, tx)
 err = client.SendTransaction(context.TODO(), signedTx)
 ```
 
-# Further reading
-* [Signing and Verifying Ethereum Signatures](https://yos.io/2018/11/16/ethereum-signatures/)
-* [EIP-155: Simple replay attack protection](https://eips.ethereum.org/EIPS/eip-155)
-* [The Dark Side of the Elliptic Curve - Signing Ethereum Transactions with AWS KMS in JavaScript](https://luhenning.medium.com/the-dark-side-of-the-elliptic-curve-signing-ethereum-transactions-with-aws-kms-in-javascript-83610d9a6f81)
+## Versioning
 
-# History
-This package was originally created for [welthee](https://welthee.com), and donated to the community as open source.
-Since the company could not provide a maintainer for this package, it was moved to the [matelang], where it is now maintained.
-I am the original author of this package, and I am happy to continue maintaining it.
+Tags follow Go's [semantic import versioning](https://go.dev/ref/mod#versions).
+The module path includes the major-version suffix, so a major-version bump
+requires updating both the tag (`vX.Y.Z`) and the import path
+(`.../vX`).
+
+| Module path                                            | Status                                |
+|--------------------------------------------------------|---------------------------------------|
+| `github.com/matelang/go-ethereum-aws-kms-tx-signer/v3` | **current**, maintained               |
+| `github.com/matelang/go-ethereum-aws-kms-tx-signer/v2` | unreleased; never had a `v2.x.x` tag  |
+| `github.com/welthee/go-ethereum-aws-kms-tx-signer/v2`  | abandoned upstream                    |
+| `github.com/welthee/go-ethereum-aws-kms-tx-signer`     | `v0.1.x` historical                   |
+
+## Further reading
+
+- [Signing and Verifying Ethereum Signatures](https://yos.io/2018/11/16/ethereum-signatures/)
+- [EIP-155: Simple replay attack protection](https://eips.ethereum.org/EIPS/eip-155)
+- [The Dark Side of the Elliptic Curve - Signing Ethereum Transactions with AWS KMS in JavaScript](https://luhenning.medium.com/the-dark-side-of-the-elliptic-curve-signing-ethereum-transactions-with-aws-kms-in-javascript-83610d9a6f81)
+
+## History
+
+This package was originally created for [welthee](https://welthee.com)
+and donated to the community as open source. Since the company could not
+provide a maintainer, it was moved to `matelang/` where it continues to
+be maintained by the original author.
