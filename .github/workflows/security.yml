@@ -4,7 +4,6 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
   schedule:
     # Weekly Monday at 06:00 UTC to catch newly-disclosed vulnerabilities in pinned deps.
     - cron: '0 6 * * 1'
