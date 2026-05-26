@@ -6,7 +6,7 @@ and security bar.
 
 ## Local development
 
-Required: Go 1.24 or newer (CI runs the matrix 1.24 → 1.26).
+Required: Go 1.25 or newer (CI runs the matrix 1.25 → 1.26).
 
 ```bash
 # Build everything
